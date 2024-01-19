@@ -6,10 +6,8 @@
 </template>
 
 <script>
-import EDataTable from "../components/Core/EDataTable/index.vue"
 
 export default {
-  components: {EDataTable},
   data() {
     return {
       // set the array type you want to show in table in here

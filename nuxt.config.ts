@@ -13,5 +13,5 @@ export default {
       },
     ],
   },
-  components: ["~/components"],
+  components: [{ path: "~/components/Core" }, "~/components"],
 };

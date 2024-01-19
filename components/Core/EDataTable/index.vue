@@ -2,21 +2,21 @@
     <div class="main">
       <h1>{{ name }}</h1>
       
-      <FilterForm
+      <EDataTableFilterForm
         :headers="config"
         :filterValues="filter"
       />
   
-      <UserTable
+      <EDataTableBaseTable
         v-if="dataLoaded"
-        :users="paginatedUsers"
+        :items="paginatedItems"
         :sortKey="sortKey"
         :sortBy="sortBy"
         :config="config"
       />
   
-      <Pagination
-        :totalItems="filteredUsers.length"
+      <EDataTablePagination
+        :totalItems="filteredItems.length"
         :itemsPerPage="pageSize"
         :currentPage="currentPage"
         @changeCurrentPage="changeCurrentPage"
@@ -26,16 +26,12 @@
   </template>
   
   <script>
-  import FilterForm from "./FilterForm.vue";
-  import UserTable from "./UsersTable.vue";
-  import Pagination from "./Pagination.vue";
   import usersData from "../../../assets/data/users.json";
   
   export default {
-    components: { FilterForm, UserTable, Pagination },
     data() {
       return {
-        users: usersData,
+        items: usersData,
         filter: {},
         sortKey: "",
         sortBy: "" ,
@@ -56,16 +52,16 @@
       },
     },
     computed: {
-      filteredUsers() {
-        let filtered = this.users;
+      filteredItems() {
+        let filtered = this.items;
   
         // Handle changes in filterable parameters
         this.config.forEach((header) => {
           if (header.filterable) {
             const filterValue = this.filter[header.value];
             if (filterValue) {
-              filtered = filtered.filter((user) =>
-                user[header.value].toLowerCase().includes(filterValue.toLowerCase())
+              filtered = filtered.filter((item) =>
+                item[header.value].toLowerCase().includes(filterValue.toLowerCase())
               );
             }
           }
@@ -83,11 +79,11 @@
   
         return filtered;
       },
-     //  List of users based on currentPage
-      paginatedUsers() {
+     //  List of items based on currentPage
+      paginatedItems() {
         const startIndex = (this.currentPage - 1) * this.pageSize;
         const endIndex = startIndex + this.pageSize;
-        return this.filteredUsers.slice(startIndex, endIndex);
+        return this.filteredItems.slice(startIndex, endIndex);
       },
     },
     methods: {

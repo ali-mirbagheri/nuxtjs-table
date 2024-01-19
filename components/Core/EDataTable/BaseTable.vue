@@ -34,9 +34,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="user in users" :key="user.id">
+      <tr v-for="item in items" :key="item.id">
         <td v-for="(header, index) in config" :key="index">
-          {{ user[header.value] }}
+          {{ item[header.value] }}
         </td>
       </tr>
     </tbody>
@@ -46,7 +46,7 @@
 <script>
 export default {
   props: {
-    users: {
+    items: {
       type: Array,
       required: true,
     },
